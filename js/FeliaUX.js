@@ -121,9 +121,15 @@ class Widget{
         return this.sClass;
     }
 
-    HTMLParse(mapAttr){
+    HTMLParse(mapAttr, htmlChild = false){
         let match = new RegExp(Object.keys(mapAttr).join("|"),"gi");
-        let htmlToParse = this.sHtmlDynamic == "" ? this.sHtml : this.sHtmlDynamic;
+        let htmlToParse = "";
+
+        if(htmlChild == false){
+            htmlToParse = this.sHtmlDynamic == "" ? this.sHtml : this.sHtmlDynamic;
+        }else{
+            htmlToParse = this.sHtmlChild;
+        }
 
         return htmlToParse.replace(match, function(matched){
 			return mapAttr[matched];
@@ -357,7 +363,7 @@ class Text extends Widget{
         super({"entity":entity}, {"config":{
             "html" : `<textarea id="IDNAME" class="textarea CLASSNAME" placeholder="PLACEHOLDERTEXT" style="width:WIDTHPX; height:HEIGHTPX;"></textarea>`,
             "htmlChd" : '',
-            "tagInsert": `<textarea id="IDNAME" class="textarea CLASSNAME" placeholder="PLACEHOLDERTEXT" style="width:WIDTHPX; height:HEIGHTPX;">`,
+            "tagInsert": `<div id="IDNAME" class="textarea CLASSNAME" placeholder="PLACEHOLDERTEXT" style="width:WIDTHPX; height:HEIGHTPX;">`,
             "mapAttr" : {
                 "IDNAME" : "",
                 "CLASSNAME" : "",
@@ -401,5 +407,77 @@ class Text extends Widget{
     
     add(){
         this.sHtmlDynamic = this.sHtml.replace(this.sTagInsert, this.sTagInsert+this.sTextConcent);       
+    }
+}
+
+
+class ListBox extends Widget{
+    constructor(entity, rows = 2, width = 100, height = 100, list=[]){
+        super({"entity":entity}, {"config":{
+            "html" : `<select id="IDNAME" size="ROWS" class="listbox CLASSNAME" style="width:WIDTHPX; height:HEIGHTPX;"></select>`,
+            "htmlChd" : '<option id="IDNAME" value="TEXT">TEXT</option>',
+            "tagInsert": `<select id="IDNAME" size="ROWS" class="listbox CLASSNAME" style="width:WIDTHPX; height:HEIGHTPX;">`,
+            "mapAttr" : {
+                "IDNAME" : "",
+                "CLASSNAME" : "",
+                "PLACEHOLDERTEXT": "",
+                "WIDTHPX":"",
+                "HEIGHTPX":"",
+                "ROWS":"",
+            },
+            "mapAttrChd" : {
+                "IDNAME":"",
+                "TEXT":"",
+            }
+        }});
+
+        this.aElementList = list;
+
+        this.iWidth = width;
+        this.iHeight = height;
+        
+        this.jMapAttributes.IDNAME = this.sId;
+        this.jMapAttributes.CLASSNAME = this.sClass;
+        this.jMapAttributes.PLACEHOLDERTEXT = this.sPlaceholder;
+        this.jMapAttributes.WIDTHPX = `${String(this.iWidth)}px`;
+        this.jMapAttributes.HEIGHTPX = `${String(this.iHeight)}px`;
+        this.jMapAttributes.ROWS = String(rows);
+
+        this.jMapAttributesChild.IDNAME = this.sId;
+
+        this.add();
+    }
+    add(){
+        if(this.aElementList.length > 0){
+            this.sHtmlDynamic = this.sHtml;
+            let list = this.aElementList.reverse();
+            for(let i=0; i<= this.aElementList.length -1; i++){
+                this.jMapAttributesChild.TEXT = String(list[i]);
+                this.jMapAttributesChild.IDNAME = `IDNAME_item${i}`
+                this.sHtmlDynamic = this.sHtmlDynamic.replace(this.sTagInsert, `${this.sTagInsert}${this.HTMLParse(this.jMapAttributesChild, true)}`);
+            }
+        }
+    }
+    addElement(elm){
+        this.aElementList.push(elm);
+        this.add();
+    }  
+    
+    addElementsList(list = []){
+        this.aElementList.concat(list);
+        this.add();
+    }
+    
+    setElementsList(list = []){
+        this.aElementList = list;
+        this.add();
+    }
+    
+    getElements(){
+        return this.aElementList;
+    }
+
+    getIndexElement(index = 0){
+        return this.aElementList[index];
     }
 }
