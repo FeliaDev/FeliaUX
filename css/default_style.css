@@ -63,7 +63,6 @@ body{
     border-right: 1px solid rgb(230, 230, 230);
     border-top: 1px solid gray;
     border-left: 1px solid gray;
-    padding: 4px 0px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -75,10 +74,10 @@ body{
     border-radius: 100px;   
 }
 
-[data-check = "false"] > div{
+[data-check = "false"] div{
     background-color: white;
 }
 
-[data-check = "true"] > div{
+[data-check = "true"] div{
     background-color: black;
 }
