@@ -481,3 +481,12 @@ class ListBox extends Widget{
         return this.aElementList[index];
     }
 }
+
+class ComboBox extends ListBox{
+    constructor(entity, width = 100, height = 100, list=[]){
+        super(entity, 1, width, height, list);
+
+        this.sHtml = `<select id="IDNAME" size="ROWS" class="combo-box CLASSNAME" style="width:WIDTHPX; height:HEIGHTPX;"></select>`;
+        this.sTagInsert = `<select id="IDNAME" size="ROWS" class="combo-box CLASSNAME" style="width:WIDTHPX; height:HEIGHTPX;">`;
+    }
+}

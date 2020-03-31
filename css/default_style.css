@@ -113,7 +113,6 @@ body{
 }
 
 .listbox {
-    resize: none;
     color:black;
     background-color: #ffffff;
     font-family: sans-serif;
@@ -124,7 +123,18 @@ body{
     border-left: 1px solid gray;
 }
 
-.input:focus, .textarea:focus, .listbox:focus {
+.combo-box{
+    color:black;
+    background-color: #ffffff;
+    font-family: sans-serif;
+    font-size: 12px;
+    border-bottom: 1px solid white;
+    border-right: 1px solid white;
+    border-top: 1px solid gray;
+    border-left: 1px solid gray;
+}
+
+.input:focus, .textarea:focus, .listbox:focus, .combo-box:focus{
     outline: none;
 }
 
