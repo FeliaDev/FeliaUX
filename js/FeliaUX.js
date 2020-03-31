@@ -253,7 +253,7 @@ class RadioButton extends Widget{
         super({"entity":entity}, {"config":{
             "html" : `<div id="IDNAME" data-check="CHECKED" class="radio-button CLASSNAME"><div id="IDNAME_circle"></div></div>`,
             "htmlChd" : '',
-            "tagInsert":`<div id="IDNAME" class="button CLASSNAME"><span id="IDNAME_BtnText">`,
+            "tagInsert":'',
             "mapAttr" : {
                 "IDNAME" : "",
                 "CLASSNAME" : "",
