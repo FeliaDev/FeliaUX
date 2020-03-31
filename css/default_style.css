@@ -38,7 +38,7 @@ body{
     margin-top: 1px;
 }
 
-.input{
+.input, .input-number{
     color:black;
     background-color: #ffffff;
     font-family: sans-serif;
@@ -134,7 +134,12 @@ body{
     border-left: 1px solid gray;
 }
 
-.input:focus, .textarea:focus, .listbox:focus, .combo-box:focus{
+.input-number::-webkit-inner-spin-button, 
+.input-number::-webkit-outer-spin-button {  
+   opacity: 1;
+}
+
+.input:focus, .textarea:focus, .listbox:focus, .combo-box:focus, .input-number:focus{
     outline: none;
 }
 

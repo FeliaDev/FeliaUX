@@ -102,6 +102,7 @@ class Widget{
             ": The 'X' widget it is already loaded in document",
             ": 'X' param must be a Function",
             ": 'X' param must be a Boolean",
+            ": 'X' param must be a Integer"
         ];
 
         if(info[1] != -1){
@@ -247,9 +248,51 @@ class Input extends Widget{
         this.jMapAttributes.CLASSNAME = this.sClass;
         this.jMapAttributes.PLACEHOLDERTEXT = this.sPlaceholder;
     }
+    
+    setPlaceholder(placeholder){
+        this.ErrorThrow(["placeholder", typeof placeholder === "string" ? -1 : 3]);
+        this.sPlaceholder = placeholder;
+        this.jMapAttributes.PLACEHOLDERTEXT = this.sPlaceholder;
+    }
 
     getPlaceholder(){
         return this.sPlaceholder;
+    }
+
+}
+
+class InputNumber extends Input{
+    constructor(entity, min = null, max = null, placeholder = ""){
+        super(entity, placeholder)
+        this.sHtml = `<input id="IDNAME" class="input-number CLASSNAME" min="MINRANGE" max="MAXRANGE" placeholder="PLACEHOLDERTEXT" type="number">`
+
+        this.iMinRange = min;
+        this.iMaxRange = max;
+        this.jMapAttributes.MINRANGE = this.iMinRange == null ? "" : String(min);
+        this.jMapAttributes.MAXRANGE = this.iMaxRange == null ? "" : String(min);
+
+    }
+
+    setMinRange(min){
+        this.ErrorThrow(["min", typeof min == "number" ? -1 : 10]);
+        this.iMinRange = min;
+        this.jMapAttributes.MINRANGE = this.iMinRange;
+    }
+
+    setMaxRange(max){
+        this.ErrorThrow(["max", typeof min == "number" ? -1 : 10]);
+        this.iMaxRange = max;
+        this.jMapAttributes.MAXRANGE = this.iMaxRange;
+    }
+
+    disableMinRange(){
+        this.iMinRange = null;
+        this.jMapAttributes.MINRANGE = "";
+    }
+    
+    disableMaxRange(){
+        this.iMinRange = null;
+        this.jMapAttributes.MINRANGE = "";
     }
 
 }
