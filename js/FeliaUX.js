@@ -101,7 +101,7 @@ class Widget{
             ": The value of 'X' key must be a non-empty String",
             ": The 'X' widget it is already loaded in document",
             ": 'X' param must be a Function",
-            ": 'X' param must be a Boolean"
+            ": 'X' param must be a Boolean",
         ];
 
         if(info[1] != -1){
@@ -350,4 +350,56 @@ class Checkbox extends Widget{
         self.bCheck = !(this.bCheck);
     }
 
+}
+
+class Text extends Widget{
+    constructor(entity, width = 100, height = 100, text = "", placeholder = ""){
+        super({"entity":entity}, {"config":{
+            "html" : `<textarea id="IDNAME" class="textarea CLASSNAME" placeholder="PLACEHOLDERTEXT" style="width:WIDTHPX; height:HEIGHTPX;"></textarea>`,
+            "htmlChd" : '',
+            "tagInsert": `<textarea id="IDNAME" class="textarea CLASSNAME" placeholder="PLACEHOLDERTEXT" style="width:WIDTHPX; height:HEIGHTPX;">`,
+            "mapAttr" : {
+                "IDNAME" : "",
+                "CLASSNAME" : "",
+                "PLACEHOLDERTEXT": "",
+                "WIDTHPX":"",
+                "HEIGHTPX":"",
+            },
+            "mapAttrChd" : {}
+        }});
+
+        this.sTextConcent = text;
+        this.sPlaceholder = placeholder;
+        this.iWidth = width;
+        this.iHeight = height;
+        this.jMapAttributes.IDNAME = this.sId;
+        this.jMapAttributes.CLASSNAME = this.sClass;
+        this.jMapAttributes.PLACEHOLDERTEXT = this.sPlaceholder;
+        this.jMapAttributes.WIDTHPX = `${String(this.iWidth)}px`;
+        this.jMapAttributes.HEIGHTPX = `${String(this.iHeight)}px`;
+
+        this.add();
+    }
+
+    setText(text){
+        this.ErrorThrow(["text",(typeof text === "string") ? -1 : 2])
+        this.sTextConcent = text;
+        this.add();
+    }
+
+    getText(){
+        if(ExistsInDocument(this) == true){
+            return document.querySelector(`#${this.sId}`).value
+        }
+
+        return this.sTextConcent;   
+    }
+
+    getPlaceholder(){
+        return this.sPlaceholder;
+    }
+    
+    add(){
+        this.sHtmlDynamic = this.sHtml.replace(this.sTagInsert, this.sTagInsert+this.sTextConcent);       
+    }
 }
