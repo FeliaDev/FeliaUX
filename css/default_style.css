@@ -74,6 +74,35 @@ body{
     border-radius: 100px;   
 }
 
+.checkbox {
+    width: 12px;
+    height: 12px;
+    background-color: #ffffff;
+    border-bottom: 1px solid rgb(230, 230, 230);
+    border-right: 1px solid rgb(230, 230, 230);
+    border-top: 1px solid gray;
+    border-left: 1px solid gray;
+    position: relative;
+}
+
+.checkbox > .checkbox-tilde-1{
+    width: 2px;
+    height: 4px;
+    transform: rotate(-45deg);
+    position: absolute;
+    left: 2px;
+    top: 5px;
+}
+
+.checkbox > .checkbox-tilde-2{
+    width: 2px;
+    height: 7px;
+    transform: rotate(45deg);
+    position: absolute;
+    left: 5px;
+    top: 2px;
+}
+
 [data-check = "false"] div{
     background-color: white;
 }

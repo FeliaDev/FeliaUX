@@ -299,3 +299,55 @@ class RadioButton extends Widget{
     }
 
 }
+
+class Checkbox extends Widget{
+    constructor(entity, check = false){
+        super({"entity":entity}, {"config":{
+            "html" : `<div id="IDNAME" data-check="CHECKED" class="checkbox CLASSNAME"><div id="IDNAME_tilde1" class="checkbox-tilde-1"></div><div id="IDNAME_tilde2" class="checkbox-tilde-2"></div></div>`,
+            "htmlChd" : '',
+            "tagInsert":'',
+            "mapAttr" : {
+                "IDNAME" : "",
+                "CLASSNAME" : "",
+                "CHECKED" : ""
+            },
+            "mapAttrChd" : {}
+        }});
+
+        this.ErrorThrow(["check", typeof check === "boolean" ? -1 : 9]);
+
+        this.bCheck = check;
+        
+        this.jMapAttributes.IDNAME = this.sId;
+        this.jMapAttributes.CLASSNAME = this.sClass;
+        this.jMapAttributes.CHECKED = String(this.bCheck);
+
+        this.fCommand = ()=>{
+            if(this.bCheck == false){
+                document.querySelector(`#${this.sId}`).setAttribute("data-check","true");
+                this.bCheck = true;
+            }else{
+                document.querySelector(`#${this.sId}`).setAttribute("data-check","false")
+                this.bCheck = false;
+            }
+            
+        };
+    }
+
+    getCheck(){
+        return this.bCheck;
+    }
+
+    bindCommand(reference = undefined){
+        const self = reference == undefined ? this : reference;
+        self.ErrorThrow(["command", typeof self.fCommand === "function" ? -1 : 8]);
+        
+        self.bCheck = !(this.bCheck);
+        self.fCommand();
+        
+        document.querySelector(`#${self.sId}`).addEventListener("click", self.fCommand);
+
+        self.bCheck = !(this.bCheck);
+    }
+
+}
