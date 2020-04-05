@@ -10,6 +10,21 @@ const cmbComboBox = new ComboBox({"master":frmMainFrame.getId(), "id":"MyComboBo
 const inumInputNumber = new InputNumber({"master":frmMainFrame.getId(), "id":"MyInputNum", "class":""});
 const pswInputPsw = new InputPassword({"master":frmMainFrame.getId(), "id":"MyInputPass", "class":""});
 
+
+const mbrMenuBar = new Menu({"master":"MainHeader", "id":"MyMenuBar", "class":""});
+const mbtnFileMenu = new MenuSection({"master":mbrMenuBar.getId(), "id":"MyFileMenu", "class":""}, "File");
+const mbtnEditMenu = new MenuSection({"master":mbrMenuBar.getId(), "id":"MyEditMenu", "class":""}, "Edit");
+
+mbtnFileMenu.addItem("New File", ()=>{console.log("new file clicked")});
+mbtnFileMenu.addItem("Open File", ()=>{console.log("open file clicked")});
+mbtnFileMenu.addItem("Save File", ()=>{console.log("Save file clicked")});
+mbtnFileMenu.addItem("Save As File", ()=>{console.log("Save As file clicked")});
+mbtnFileMenu.addItem("Exit", ()=>{console.log("exit clicked")});
+mbtnFileMenu.addItem("Exita", ()=>{console.log("exit clicked")});
+
+mbtnEditMenu.addItem("Undo", ()=>{console.log("undo clicked")})
+mbtnEditMenu.addItem("Redo", ()=>{console.log("redo clicked")})
+
 let aElementsList = ["I", "am", "a", "Listbox"];
 let aElementsCombo = ["I", "am", "a", "ComboBox"];
 
@@ -19,6 +34,10 @@ lstListbox.setElementsList(aElementsList);
 cmbComboBox.setElementsList(aElementsCombo);
 inumInputNumber.setMinRange(0);
 
+
+mbrMenuBar.pack();
+mbtnFileMenu.pack();
+mbtnEditMenu.pack();
 frmMainFrame.pack();
 lblLabel.pack();
 btnButton.pack();

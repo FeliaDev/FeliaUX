@@ -139,6 +139,11 @@ class Widget{
 
     pack(){
         this.ErrorThrow([`${this.constructor.name} with id ${this.sId}`, (ExistsInDocument(this) != true ? -1 : 7)]);
+        
+        if(this.add != undefined){
+            this.add()
+        }
+
         document.querySelector(`#${this.sMaster}`).innerHTML += this.HTMLParse(this.jMapAttributes);
         
         if(this.bindCommand != undefined){
@@ -565,5 +570,81 @@ class Frame extends Widget{
         this.jMapAttributes.PLACEHOLDERTEXT = this.sPlaceholder;
         this.jMapAttributes.WIDTHPX = this.iWidth == -1 ? "auto" : `${String(this.iWidth)}px`;
         this.jMapAttributes.HEIGHTPX = this.iHeight == -1 ? "auto" : `${String(this.iHeight)}px`;
+    }
+}
+
+class Menu extends Widget{
+    constructor(entity){
+        super({"entity":entity}, {"config":{
+            "html" : `<div id="IDNAME" class="menu CLASSNAME"></div>`,
+            "htmlChd" : "",
+            "tagInsert": "",
+            "mapAttr" : {
+                "IDNAME" : "",
+                "CLASSNAME" : ""
+            },
+            "mapAttrChd" : {}
+        }});
+
+        this.jMapAttributes.IDNAME = this.sId;
+        this.jMapAttributes.CLASSNAME = this.sClass;
+    }
+}
+
+class MenuSection extends Widget{
+    constructor(entity, labelName = ""){
+        super({"entity":entity}, {"config":{
+            "html" : `<div id="IDNAME" class="menu-section CLASSNAME"><p>LABEL</p><div id="IDNAME_ItemContainer"></div></div>`,
+            "htmlChd" : `<div id="IDNAME_Item_ITEMID">ITEMLABEL</div>`,
+            "tagInsert": `<div id="IDNAME" class="menu-section CLASSNAME"><p>LABEL</p><div id="IDNAME_ItemContainer">`,
+            "mapAttr" : {
+                "IDNAME" : "",
+                "CLASSNAME" : "",
+                "LABEL":""
+            },
+            "mapAttrChd" : {
+                "ITEMLABEL":"",
+                "ITEMID":""
+            }
+        }});
+        
+        this.sLabelName = labelName;
+        this.aMenuItems = [];
+        this.jMapAttributes.IDNAME = this.sId;
+        this.jMapAttributes.CLASSNAME = this.sClass;
+        this.jMapAttributes.LABEL = this.sLabelName;
+    }
+
+    addItem(labelName, command){
+        this.aMenuItems.push({"name":labelName, "command":command});
+        console.log(labelName, this.aMenuItems);
+    }
+
+    add(){
+        if(this.aMenuItems.length > 0){
+            this.sHtmlDynamic = this.sHtml;
+            let list = this.aMenuItems.reverse();
+            for(let i=0; i<= this.aMenuItems.length -1; i++){
+                this.jMapAttributesChild.ITEMLABEL = list[i]["name"];
+                this.jMapAttributesChild.ITEMID = list[i]["name"].replace(/ /g,'');
+                this.sHtmlDynamic = this.sHtmlDynamic.replace(this.sTagInsert, `${this.sTagInsert}${this.HTMLParse(this.jMapAttributesChild, true)}`);
+            }
+            this.aMenuItems.reverse();
+        }
+    }
+
+    bindCommand(reference = undefined){
+        const self = reference == undefined ? this : reference;
+        if(self.aMenuItems.length > 0){
+            let list = self.aMenuItems.reverse();
+            for(let i=0; i<= self.aMenuItems.length -1; i++){
+                self.ErrorThrow(["command", typeof list[i]["command"] === "function" ? -1 : 8]);
+                document.querySelector(`#${self.sId}_Item_${list[i]["name"].replace(/ /g,'')}`).addEventListener("click", list[i]["command"]);
+            }
+            document.querySelector(`#${self.sId}`).addEventListener("click", ()=>{
+                document.querySelector(`#${self.sId}_ItemContainer`).style.display="block";
+            });
+            this.aMenuItems.reverse();
+        }
     }
 }

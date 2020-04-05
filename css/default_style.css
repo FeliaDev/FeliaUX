@@ -139,6 +139,50 @@ body{
     border-left: 1px solid gray;
 }
 
+.menu{
+    min-width: 100%;
+    background-color: white;
+    font-family: sans-serif;
+    font-size: 12px;
+    color:black;
+    padding: 1px 0px 1px 1px;
+    display: flex;
+    align-items: center;
+}
+.menu-section{
+    position: relative;
+    cursor: default;
+}
+.menu-section > p{
+    display: inline-block;
+    padding: 2px 5px;
+}
+.menu-section > div{
+    display: none;
+    min-width: max-content;
+    border: 1px solid gray;
+    background-color: #f0f0f0;
+    padding:2px;
+    box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 19px;
+    z-index: 10;
+}
+.menu-section > div > div{
+    padding: 2px 4px 2px 15px;
+}
+
+.menu-section > div > div:hover{
+    background-color: #0076d7;
+    color:white;
+}
+
+.menu-section > p:hover{
+    outline:1px solid #99d1ff;
+    background-color: #cce8ff;
+}
+
+
 .input-number::-webkit-inner-spin-button, 
 .input-number::-webkit-outer-spin-button {  
    opacity: 1;
@@ -155,3 +199,4 @@ body{
 [data-check = "true"] div{
     background-color: black;
 }
+
