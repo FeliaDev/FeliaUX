@@ -588,15 +588,21 @@ class Menu extends Widget{
 
         this.jMapAttributes.IDNAME = this.sId;
         this.jMapAttributes.CLASSNAME = this.sClass;
+
+        window.addEventListener("click", function(e){
+            if(this.menuOpen != undefined && e.target.dataset.widget != "MenuSection"){
+                document.querySelector(`#${this.menuOpen}_ItemContainer`).style.display = "none";
+            }
+        })
     }
 }
 
 class MenuSection extends Widget{
     constructor(entity, labelName = ""){
         super({"entity":entity}, {"config":{
-            "html" : `<div id="IDNAME" class="menu-section CLASSNAME"><p>LABEL</p><div id="IDNAME_ItemContainer"></div></div>`,
-            "htmlChd" : `<div id="IDNAME_Item_ITEMID">ITEMLABEL</div>`,
-            "tagInsert": `<div id="IDNAME" class="menu-section CLASSNAME"><p>LABEL</p><div id="IDNAME_ItemContainer">`,
+            "html" : `<div data-widget="MenuSection" id="IDNAME" class="menu-section CLASSNAME"><p data-widget="MenuSection">LABEL</p><div data-widget="MenuSection" id="IDNAME_ItemContainer"></div></div>`,
+            "htmlChd" : `<div data-widget="MenuSection" id="IDNAME_Item_ITEMID">ITEMLABEL</div>`,
+            "tagInsert": `<div data-widget="MenuSection" id="IDNAME" class="menu-section CLASSNAME"><p data-widget="MenuSection">LABEL</p><div data-widget="MenuSection" id="IDNAME_ItemContainer">`,
             "mapAttr" : {
                 "IDNAME" : "",
                 "CLASSNAME" : "",
@@ -642,7 +648,11 @@ class MenuSection extends Widget{
                 document.querySelector(`#${self.sId}_Item_${list[i]["name"].replace(/ /g,'')}`).addEventListener("click", list[i]["command"]);
             }
             document.querySelector(`#${self.sId}`).addEventListener("click", ()=>{
+                if(window.menuOpen != undefined && window.menuOpen != self.sId){
+                    document.querySelector(`#${window.menuOpen}_ItemContainer`).style.display = "none";
+                }
                 document.querySelector(`#${self.sId}_ItemContainer`).style.display="block";
+                window.menuOpen = self.sId;
             });
             this.aMenuItems.reverse();
         }
