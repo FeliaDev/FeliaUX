@@ -38,7 +38,7 @@ body{
     margin-top: 1px;
 }
 
-.input, .input-number{
+.input, .input-number, .input-password{
     color:black;
     background-color: #ffffff;
     font-family: sans-serif;
@@ -49,6 +49,11 @@ body{
     border-left: 1px solid gray;
     padding: 4px 0px;
 
+}
+.input-password{
+    max-width:148px; 
+    max-height:24px; 
+    font-size:24px;
 }
 
 .radio-button{
@@ -139,7 +144,7 @@ body{
    opacity: 1;
 }
 
-.input:focus, .textarea:focus, .listbox:focus, .combo-box:focus, .input-number:focus{
+.input:focus, .textarea:focus, .listbox:focus, .combo-box:focus, .input-number:focus, .input-password:focus{
     outline: none;
 }
 

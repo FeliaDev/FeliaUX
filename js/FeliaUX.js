@@ -297,6 +297,14 @@ class InputNumber extends Input{
 
 }
 
+class InputPassword extends Input{
+    constructor(entity, placeholder = ""){
+        super(entity, placeholder);
+        
+        this.sHtml = `<input id="IDNAME" class="input-password CLASSNAME" placeholder="PLACEHOLDERTEXT" type="password">`;
+    }
+}
+
 class RadioButton extends Widget{
     constructor(entity, check = false){
         super({"entity":entity}, {"config":{
@@ -531,5 +539,31 @@ class ComboBox extends ListBox{
 
         this.sHtml = `<select id="IDNAME" size="ROWS" class="combo-box CLASSNAME" style="width:WIDTHPX; height:HEIGHTPX;"></select>`;
         this.sTagInsert = `<select id="IDNAME" size="ROWS" class="combo-box CLASSNAME" style="width:WIDTHPX; height:HEIGHTPX;">`;
+    }
+}
+
+class Frame extends Widget{
+    constructor(entity, width = -1, height = -1){
+        super({"entity":entity}, {"config":{
+            "html" : `<section id="IDNAME" class="frame CLASSNAME" style="width:WIDTHPX; height:HEIGHTPX;"></section>`,
+            "htmlChd" : "",
+            "tagInsert": "",
+            "mapAttr" : {
+                "IDNAME" : "",
+                "CLASSNAME" : "",
+                "WIDTHPX":"",
+                "HEIGHTPX":"",
+            },
+            "mapAttrChd" : {}
+        }});
+
+        this.iWidth = width;
+        this.iHeight = height;
+        
+        this.jMapAttributes.IDNAME = this.sId;
+        this.jMapAttributes.CLASSNAME = this.sClass;
+        this.jMapAttributes.PLACEHOLDERTEXT = this.sPlaceholder;
+        this.jMapAttributes.WIDTHPX = this.iWidth == -1 ? "auto" : `${String(this.iWidth)}px`;
+        this.jMapAttributes.HEIGHTPX = this.iHeight == -1 ? "auto" : `${String(this.iHeight)}px`;
     }
 }
