@@ -9,7 +9,9 @@ const lstListbox = new ListBox({"master":frmMainFrame.getId(), "id":"MyListbox",
 const cmbComboBox = new ComboBox({"master":frmMainFrame.getId(), "id":"MyComboBox", "class":""}, 200, 20);
 const inumInputNumber = new InputNumber({"master":frmMainFrame.getId(), "id":"MyInputNum", "class":""});
 const pswInputPsw = new InputPassword({"master":frmMainFrame.getId(), "id":"MyInputPass", "class":""});
+const winTopWin = new TopWindow("MyWindow", "", "I'm a Top Window", 200, 200, 100, 100)
 
+const lblLabelTopWin = new Label({"master":winTopWin.getId(), "id":"MyLabelIntoWin", "class":""}, "I'm a Label living in TopWindow")
 
 const mbrMenuBar = new Menu({"master":"MainHeader", "id":"MyMenuBar", "class":""});
 const mbtnFileMenu = new MenuSection({"master":mbrMenuBar.getId(), "id":"MyFileMenu", "class":""}, "File");
@@ -49,3 +51,7 @@ lstListbox.pack();
 cmbComboBox.pack();
 inumInputNumber.pack();
 pswInputPsw.pack();
+
+winTopWin.pack();
+
+lblLabelTopWin.pack()

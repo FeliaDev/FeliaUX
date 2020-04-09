@@ -623,7 +623,6 @@ class MenuSection extends Widget{
 
     addItem(labelName, command){
         this.aMenuItems.push({"name":labelName, "command":command});
-        console.log(labelName, this.aMenuItems);
     }
 
     add(){
@@ -658,3 +657,68 @@ class MenuSection extends Widget{
         }
     }
 }
+
+class TopWindow extends Widget{
+    constructor(id, className, title = "TopWindow", width = 200, height = 200, posX = 100, posY = 100){
+        super({"entity":{"master":"ParentBody", "id":id, "class":className}}, {"config":{
+            "html" : `<div id="IDNAME_TopWindow" class="top-window CLASSNAME" style="width:WIDTHPX;height:HEIGHTPX;left:POSX;top:POSY"><div id="IDNAME_FunctionBar" class="top-window-bar"><div><p id="IDNAME_FunctionBar_Title" class="top-window-title">TITLELABEL</p></div><div id="IDNAME_FunctionBar_ActionButtons" class="top-window-action-buttons"><div id="IDNAME_FunctionBar_ActionButtons_Close" class="top-window-bar-close-button"><div class="close-button-1"></div><div class="close-button-2"></div></div></div></div><div id="IDNAME" class="top-window-content-frame"></div></div>`,
+            "htmlChd" : "",
+            "tagInsert": "",
+            "mapAttr" : {
+                "IDNAME" : "",
+                "CLASSNAME" : "",
+                "TITLELABEL":"",
+                "WIDTHPX":"",
+                "HEIGHTPX":"",
+                "POSX":"",
+                "POSY":""
+            },
+            "mapAttrChd" : {}
+        }});
+
+        this.sTitle = title;
+        this.iWidth = width;
+        this.iHeight = height;
+        this.iPosX = posX;
+        this.iPosY = posY;
+
+        this.jMapAttributes.IDNAME = this.sId;
+        this.jMapAttributes.CLASSNAME = this.sClass;
+        this.jMapAttributes.TITLELABEL = this.sTitle;
+        this.jMapAttributes.WIDTHPX = String(this.iWidth)+"px";
+        this.jMapAttributes.HEIGHTPX = String(this.iHeight)+"px";
+        this.jMapAttributes.POSX = String(this.iPosX)+"px";
+        this.jMapAttributes.POSY = String(this.iPosY)+"px";
+    }
+
+    bindCommand(reference = undefined){
+        const self = reference == undefined ? this : reference;
+        document.querySelector(`#${self.sId}_FunctionBar`).addEventListener("mousedown", function(e){
+            document.mouse_drag = this;
+            this.offset = [
+                this.parentElement.offsetLeft - e.clientX,
+                this.parentElement.offsetTop - e.clientY
+            ];
+        }, true);
+        document.addEventListener("mouseup", function(){
+            this.mouse_drag = null
+        }, true);
+        document.addEventListener("mousemove", function(event){
+            event.preventDefault();
+            if(this.mouse_drag != undefined || this.mouse_drag != null){
+                let mousePosition = {
+                    x : event.clientX,
+                    y : event.clientY
+                };
+                this.mouse_drag.parentElement.style.left = (mousePosition.x + this.mouse_drag.offset[0]) + 'px';
+                this.mouse_drag.parentElement.style.top  = (mousePosition.y + this.mouse_drag.offset[1]) + 'px';
+            }
+        }, true)
+
+        document.querySelector(`#${self.sId}_FunctionBar_ActionButtons_Close`).addEventListener("click", function(){
+            document.querySelector(`#${self.sId}_TopWindow`).remove()
+        })
+    }
+}
+
+
