@@ -264,6 +264,10 @@ class Input extends Widget{
         return this.sPlaceholder;
     }
 
+    getContent(){
+        return ExistsInDocument(this) == true ? document.querySelector(`#${this.sId}`).value : "";
+    }
+
 }
 
 class InputNumber extends Input{

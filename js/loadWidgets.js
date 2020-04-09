@@ -1,7 +1,7 @@
 const frmMainFrame = new Frame({"master":"MainHeader", "id":"MyFrame", "class":""})
 const lblLabel = new Label({"master":frmMainFrame.getId(), "id":"MyLabel", "class":""}, "Label");
 const inpInput = new Input({"master":frmMainFrame.getId(), "id":"MyInput", "class":""}, "I'm an Input");
-const btnButton = new Button({"master":frmMainFrame.getId(), "id":"MyButton", "class":""}, "Button", ()=>{console.log(GetInputValue(inpInput))});
+const btnButton = new Button({"master":frmMainFrame.getId(), "id":"MyButton", "class":""}, "Button", ()=>{console.log(inpInput.getContent())});
 const rdbRadioButton = new RadioButton({"master":frmMainFrame.getId(), "id":"MyRadioButton", "class":""});
 const chkCheckbox = new Checkbox({"master":frmMainFrame.getId(), "id":"MyCheckbox","class":""})
 const txtTextarea = new Text({"master":frmMainFrame.getId(), "id":"MyText", "class":""}, 200, 200, "Hello I'm a Text Area.")
